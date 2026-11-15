@@ -43,36 +43,40 @@ Make sure you have the following tools installed:
 
 ### Steps
 
-1. Clone the repository:
+1. Clone the repository and move into it:
 
     ```bash
-    git clone https://github.com/jaden-lai/spotify_project.git
+    git clone https://github.com/jaden-lai/spotify-etl-pipeline.git
+    cd spotify-etl-pipeline
     ```
 
-2. Navigate into the project directory:
-
-    ```bash
-    cd spotify_project
-    ```
-
-3. Install required Python packages:
+2. Install the required Python packages:
 
     ```bash
     pip install -r requirements.txt
     ```
 
-4. Set up PostgreSQL:
-    - Install PostgreSQL if you haven't already.
-    - Create a database for storing the Spotify data.
-    - Update the connection details in `config.py`.
+3. Set up PostgreSQL: install it if needed and create a database for the Spotify data.
 
-5. Set up your Spotify API credentials:
-    - Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications) and create an app to get your API credentials (client ID and client secret).
-    - Set up your credentials in the `config.py` file.
+4. Create a Spotify app in the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) to get a client ID and client secret, and add a redirect URI to the app's settings.
+
+5. Create a `.env` file in the project root (it's git-ignored, so your credentials stay local):
+
+    ```bash
+    SPOTIPY_CLIENT_ID=your_client_id
+    SPOTIPY_CLIENT_SECRET=your_client_secret
+    SPOTIPY_REDIRECT_URI=http://127.0.0.1:8888/callback
+    DATABASE_URL=postgresql://user:password@localhost:5432/your_database
+    ```
+
+    `SPOTIPY_REDIRECT_URI` must match the redirect URI set in your Spotify app.
 
 ## Usage
 
-To run the pipeline, execute the `main.py` script.
+From the project root, run the pipeline:
 
 ```bash
-python main.py
+python -m scripts.main
+```
+
+The first run opens a browser window to log in to Spotify. The resulting token is cached in `.cache`, which is also git-ignored.
