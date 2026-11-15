@@ -1,0 +1,12 @@
+# Secrets and Spotify OAuth token cache
+.env
+.cache
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# macOS
+.DS_Store
